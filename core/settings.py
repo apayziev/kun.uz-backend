@@ -14,7 +14,7 @@ SECRET_KEY = "django-insecure-)^8z)jjxfzge(wh-gmx*ii*21^*vopjw^7=^c*gco%@^vrgu8c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -29,6 +29,9 @@ INSTALLED_APPS = [
     # 3rd-party apps
     "rest_framework",
     "rest_framework_swagger",
+    "ckeditor",
+    "ckeditor_uploader",
+    "taggit",
     # local apps
     "post",
 ]
@@ -127,4 +130,49 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
+}
+
+
+# CKEDITOR CONFIG
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_RESTRICT_BY_DATE = True
+CKEDITOR_FORCE_JPEG_COMPRESSION = True
+CKEDITOR_IMAGE_BACKEND = "pillow"
+CKEDITOR_ALLOW_NONIMAGE_FILES = True
+CKEDITOR_CONFIGS = {
+    "default": {
+        # "skin": "office2010",
+        "toolbar": "full",
+        "height": 400,
+        "width": "100%",
+        "removePlugins": "stylesheetparser",
+        "allowedContent": True,
+        "mathJaxLib": "//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML",
+        "extraPlugins": ",".join(
+            [
+                # "ckeditor_wiris",
+                "uploadimage",  # the upload image feature
+                "adobeair",
+                "mathjax",
+                # "ckeditor_wiris",
+                "clipboard",
+                "filetools",
+                "find",
+                "forms",
+                "iframe",
+                "iframedialog",
+                "link",
+                "liststyle",
+                "menubutton",
+                "notification",
+                "notificationaggregator",
+                "pagebreak",
+                "preview",
+                "table",
+                "tableresize",
+                "tabletools",
+                "uploadwidget",
+            ]
+        ),
+    },
 }

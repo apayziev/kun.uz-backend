@@ -1,19 +1,14 @@
 from django.db import models
 from helpers.models import BaseModel
+from ckeditor_uploader.fields import RichTextUploadingField
+from ckeditor.fields import RichTextField
+from taggit.managers import TaggableManager
 
 
 # Create your models here.
 
 
 class Category(BaseModel):
-    name = models.CharField(max_length=128)
-    slug = models.CharField(max_length=128, unique=True)
-
-    def __str__(self):
-        return self.name
-
-
-class Tag(BaseModel):
     name = models.CharField(max_length=128)
     slug = models.CharField(max_length=128, unique=True)
 
@@ -32,9 +27,9 @@ class Region(BaseModel):
 class News(BaseModel):
     title = models.CharField(max_length=128, verbose_name="Nomi")
     slug = models.CharField(max_length=128, unique=True)
-    content = models.TextField()
+    content = RichTextUploadingField(verbose_name="Ma'lumot")
     sub_content = models.CharField(max_length=256)
-    images = models.FileField(upload_to="post/", blank=True)
+    images = models.ImageField(upload_to="news", blank=True)
     image_caption = models.CharField(max_length=128, null=True, blank=True)
 
     # published date and views count
@@ -47,7 +42,7 @@ class News(BaseModel):
     region = models.ForeignKey(
         Region, on_delete=models.CASCADE, null=True, blank=True, related_name="posts"
     )
-    tag = models.ManyToManyField(Tag, null=True, blank=True, related_name="posts")
+    tags = TaggableManager()
 
     # share content
     facebook_link = models.CharField(max_length=128)
@@ -70,6 +65,7 @@ class News(BaseModel):
 
 class AudioNews(BaseModel):
     title = models.CharField(max_length=128, verbose_name="Nomi")
-    slug = models.CharField(max_length=128, unique=True)
-    audio_file = models.FileField(upload_to="post/", blank=True)
-    audio_duration = models.CharField(max_length=128, null=True, blank=True)
+    audio_file = models.FileField(upload_to="post/audio/", blank=True)
+    audio_caption = models.CharField(max_length=128, null=True, blank=True)
+    audio_image = models.ImageField(upload_to="post/audio/image", blank=True)
+    audio_duration = models.PositiveIntegerField(default=0, blank=True, null=True)

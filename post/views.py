@@ -1,8 +1,7 @@
-from post.models import News, Category, Tag, Region, AudioNews
+from post.models import News, Category, Region, AudioNews
 from post.serializers import (
     NewsSerializer,
     CategorySerializer,
-    TagSerializer,
     RegionSerializer,
     AudioNewsSerializer,
 )

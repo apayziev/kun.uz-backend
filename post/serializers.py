@@ -1,11 +1,5 @@
 from rest_framework import serializers
-from .models import News, Tag, Category, Region, AudioNews
-
-
-class TagSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Tag
-        fields = ("id", "name")
+from .models import News, Category, Region, AudioNews
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -21,7 +15,6 @@ class RegionSerializer(serializers.ModelSerializer):
 
 
 class NewsSerializer(serializers.ModelSerializer):
-    tag = TagSerializer(many=True)
     category = CategorySerializer()
 
     class Meta:
